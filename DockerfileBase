@@ -1,0 +1,16 @@
+FROM node:20.14 as builder
+
+ARG MODE=""
+
+WORKDIR /indexer
+RUN <<EOF
+set -e
+mkdir -p packages/indexer
+mkdir -p packages/mint-interface
+mkdir -p packages/sdk
+EOF
+ADD package.json yarn.lock turbo.json .
+ADD packages/indexer/package.json packages/indexer/yarn.lock packages/indexer
+ADD packages/mint-interface/package.json packages/mint-interface
+ADD packages/sdk/package.json packages/sdk
+RUN yarn install ${MODE} --frozen-lockfile && yarn cache clean
