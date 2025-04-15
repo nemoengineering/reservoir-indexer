@@ -40,7 +40,7 @@
     "aws-sdk": "^2.1148.0",
     "bullmq": "1.76.6",
     "cbor": "^9.0.2",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
     "dd-trace": "^4.0.0",
     "dotenv": "^10.0.0",
@@ -48,7 +48,7 @@
     "ethers": "^5.7.2",
     "flat": "^5.0.1",
     "fummpel": "^0.0.4",
-    "graphql": "^16.3.0",
+    "graphql": "^16.8.1",
     "graphql-request": "^4.0.0",
     "hapi-pulse": "^3.0.0",
     "hapi-swagger": "14.2.4",
@@ -74,7 +74,7 @@
     "swagger2openapi": "^7.0.8",
     "uuid-by-string": "^3.0.7",
     "winston": "^3.3.3",
-    "ws": "^8.10.0",
+    "ws": "^8.17.1",
     "yargs-parser": "21.1.1"
   },
   "devDependencies": {
