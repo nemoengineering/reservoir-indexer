@@ -11,6 +11,7 @@ import { logger } from "@/common/logger";
 import * as v1 from "@/utils/erc721c/v1";
 import * as v2 from "@/utils/erc721c/v2";
 import * as v3 from "@/utils/erc721c/v3";
+import * as v5 from "@/utils/erc721c/v5";
 
 export { v1, v2, v3 };
 
@@ -20,8 +21,10 @@ export const refreshConfig = async (contract: string) => {
     version === "v1"
       ? await v1.refreshConfig(contract)
       : version === "v2"
-      ? await v2.refreshConfig(contract)
-      : await v3.refreshConfig(contract);
+        ? await v2.refreshConfig(contract)
+        : version === "v3"
+          ? await v3.refreshConfig(contract)
+          : await v5.refreshConfig(contract);
 
     // TODO: Ideally we have a single database table to store the ERC721C configuration
     const nonMatchingConfigTables =
@@ -80,16 +83,11 @@ export const getVersion = async (contract: string) => {
     return "v2";
   } else if (
     Sdk.Erc721c.Addresses.TransferValidatorV3[config.chainId] === transferValidator ||
-    Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] === transferValidator
+    Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] === transferValidator ||
+    Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId] === transferValidator
   ) {
-    if (Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] === transferValidator) {
-      logger.info(
-        "getVersion",
-        JSON.stringify({
-          topic: "TransferValidatorV4",
-          message: `Debug TransferValidatorV4. contract=${contract}`,
-        })
-      );
+    if (Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId] === transferValidator) {
+      return "v5";
     }
 
     return "v3";
@@ -104,7 +102,8 @@ export const getVersion = async (contract: string) => {
 export const isVerifiedEOA = async (transferValidator: string, address: string) => {
   if (
     transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV3[config.chainId] ||
-    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId]
+    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] ||
+    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId]
   ) {
     transferValidator = Sdk.Erc721c.Addresses.EOARegistry[config.chainId];
   }
@@ -128,7 +127,8 @@ export const isVerifiedEOA = async (transferValidator: string, address: string) 
 export const saveVerifiedEOA = async (transferValidator: string, address: string) => {
   if (
     transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV3[config.chainId] ||
-    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId]
+    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] ||
+    transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId]
   ) {
     transferValidator = Sdk.Erc721c.Addresses.EOARegistry[config.chainId];
   }

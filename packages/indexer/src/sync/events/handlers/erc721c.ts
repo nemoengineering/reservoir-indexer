@@ -85,7 +85,8 @@ export const handleEvents = async (events: EnhancedEvent[]) => {
             : await erc721c.v2.refreshWhitelist(transferValidator, id);
         } else if (
           transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV3[config.chainId] ||
-          transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId]
+          transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] ||
+          transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId]
         ) {
           const { authorizers, additionalContracts } = await erc721c.v3.getAdditionalListContracts(
             transferValidator,

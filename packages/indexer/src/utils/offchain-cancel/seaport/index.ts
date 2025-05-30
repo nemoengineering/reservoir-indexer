@@ -273,7 +273,7 @@ export const doSignOrder = async (
         [Sdk.SeaportBase.Addresses.ReservoirV16RoyaltyEnforcingZone[config.chainId]].includes(
           order.params.zone
         ) &&
-        Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId]
+        (Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] || Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId])
       ) {
         const info = order.getInfo();
 
@@ -282,17 +282,9 @@ export const doSignOrder = async (
 
           if (
             configV3 &&
-            configV3.transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId]
+            (configV3.transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV4[config.chainId] || configV3.transferValidator === Sdk.Erc721c.Addresses.TransferValidatorV5[config.chainId])
           ) {
             transferValidator = configV3.transferValidator;
-
-            logger.info(
-              "doSignOrder",
-              JSON.stringify({
-                topic: "TransferValidatorV4",
-                message: `Using transferValidatorV4. orderId=${orderId}, transferValidator=${transferValidator}`,
-              })
-            );
           }
         }
       }

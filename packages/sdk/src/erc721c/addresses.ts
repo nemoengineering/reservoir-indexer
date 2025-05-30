@@ -20,6 +20,11 @@ export const TransferValidatorV4: ChainIdToAddress = resolveAddress(
   "TransferValidatorV4"
 );
 
+export const TransferValidatorV5: ChainIdToAddress = resolveAddress(
+  "Erc721c",
+  "TransferValidatorV5"
+);
+
 export const EOARegistry: ChainIdToAddress = resolveAddress("Erc721c", "EOARegistry");
 
 export const OpenSeaCustomTransferValidator: ChainIdToAddress = resolveAddress(
